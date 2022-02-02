@@ -44,14 +44,14 @@ public class ToolLib {
     }
 
     public static String getPowershellCommand(String cmd) {
-        return EncodeUtil.getPowershellPayload(cmd);
+        return EncodeUtil.getPowershellCommand(cmd);
     }
 
     public static String getBashCommand(String cmd) {
-        return EncodeUtil.getBashPayload(cmd);
+        return EncodeUtil.getBashCommand(cmd);
     }
 
     public static String getStringCommand(String cmd) {
-        return EncodeUtil.getStringPayload(cmd);
+        return EncodeUtil.getStringCommand(cmd);
     }
 }

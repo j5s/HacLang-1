@@ -6,7 +6,7 @@ import java.util.Base64;
 import java.util.List;
 
 public class EncodeUtil {
-    public static String getPowershellPayload(String cmd) {
+    public static String getPowershellCommand(String cmd) {
         char[] chars = cmd.toCharArray();
         List<Byte> temp = new ArrayList<>();
         for (char c : chars) {
@@ -25,13 +25,13 @@ public class EncodeUtil {
         return prefix + data;
     }
 
-    public static String getBashPayload(String cmd) {
+    public static String getBashCommand(String cmd) {
         String data = Base64.getEncoder().encodeToString(cmd.getBytes(StandardCharsets.UTF_8));
         String template = "bash -c {echo,__BASE64__}|{base64,-d}|{bash,-i}";
         return template.replace("__BASE64__", data);
     }
 
-    public static String getStringPayload(String cmd) {
+    public static String getStringCommand(String cmd) {
         ArrayList<String> result = new ArrayList<>(cmd.length());
         for (int i = 0; i < cmd.length(); i++) {
             int x = Character.codePointAt(cmd, i);
